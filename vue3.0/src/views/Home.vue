@@ -6,7 +6,6 @@
         <li
           class="list-group-item"
           :key="'lists-' + index"
-          @click="changeCheckedStatus(index)"
           v-if="!item.isChecked"
         >
           <div class="form-group form-check">
@@ -15,9 +14,17 @@
               class="form-check-input"
               v-model="item.isChecked"
               :id="'item-' + index"
+              @click="changeCheckedStatus(index)"
             />
-            <label :for="'item-' + index" class="form-check-label">
+            <label
+              class="form-check-label"
+              v-if="!item.isEdit"
+              @dblclick="showEditInput(index)"
+            >
               {{ item.name }}
+            </label>
+            <label :for="'item-' + index" class="form-check-label" v-else>
+              <input type="text" class="form-control" ref='editInputRef' v-model="state.editValue" @blur="editInputBlur(index)"/>
             </label>
           </div>
         </li>
@@ -29,7 +36,6 @@
         class="list-group-item"
         v-for="(item, index) in state.finished"
         :key="'finished-' + index"
-        @click="changeCheckedStatus(index)"
       >
         <div class="form-group form-check">
           <input
@@ -46,6 +52,22 @@
       </li>
     </ul>
     <h1>添加新的Task</h1>
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        placehodler="添加新的Task"
+        v-model.trim="state.addValue"
+        @keyup.enter="add"
+      />
+      <input
+        type="button"
+        value="添加"
+        @click="add"
+        class="btn btn-primary btn-lg btn-block"
+        :disabled="!state.addValue"
+      />
+    </div>
   </div>
 </template>
 
@@ -58,17 +80,17 @@ export default {
     const state = reactive({
       lists: [
         {
-          name: "1",
+          name: "是否阿桑的歌肉体和就的风格和是否会",
           isChecked: false,
           isEdit: false,
         },
         {
-          name: "2",
+          name: "阿斯蒂芬请问图为引入儿童语重心长v",
           isChecked: false,
           isEdit: false,
         },
         {
-          name: "3",
+          name: "是否会如有屁ui右腿图",
           isChecked: false,
           isEdit: false,
         },
@@ -76,13 +98,33 @@ export default {
       finished: computed(() =>
         state.lists.filter((item) => item.isChecked == true)
       ),
+      addValue: "",
+      editValue: ""
     });
+
+    const add = () => {
+      state.lists.push({
+        name: state.addValue,
+        isChecked: false,
+        isEdit: false,
+      });
+      state.addValue = "";
+    };
+
+    const showEditInput = (index) => {
+      state.lists[index].isEdit = !state.lists[index].isEdit;
+      state.editValue = state.lists[index].name
+    };
+
+    const editInputBlur = (index)=>{
+      state.lists[index].isEdit = !state.lists[index].isEdit;    
+    }
 
     const changeCheckedStatus = (index) => {
       state.lists[index].isChecked = !state.lists[index].isChecked;
     };
 
-    return { state, changeCheckedStatus };
+    return { state, changeCheckedStatus, add, showEditInput, editInputBlur };
   },
 };
 </script>
