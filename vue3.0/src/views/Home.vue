@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" @mousedown="mouseDown">
     <h1>ToDo List</h1>
     <ul class="list-group">
       <template v-for="(item, index) in state.lists">
@@ -24,7 +24,13 @@
               {{ item.name }}
             </label>
             <label :for="'item-' + index" class="form-check-label" v-else>
-              <input type="text" class="form-control" ref='editInputRef' v-model="state.editValue" @blur="editInputBlur(index)"/>
+              <input
+                type="text"
+                class="form-control"
+                v-model="state.editValue"
+                @blur="editInputBlur(index)"
+                ref="inputRef"
+              />
             </label>
           </div>
         </li>
@@ -72,7 +78,7 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 
 export default {
   name: "Home",
@@ -99,8 +105,10 @@ export default {
         state.lists.filter((item) => item.isChecked == true)
       ),
       addValue: "",
-      editValue: ""
+      editValue: "",
+      editIndex:0
     });
+    const inputRef = ref(null)
 
     const add = () => {
       state.lists.push({
@@ -111,20 +119,31 @@ export default {
       state.addValue = "";
     };
 
+    const mouseDown = (e)=>{
+      if(inputRef.value && e.target !== inputRef.value){
+        state.lists[state.editIndex] = {
+          name:state.editValue,
+          isEdit:false,
+          isChecked:false
+        }
+      }
+    }
+
     const showEditInput = (index) => {
-      state.lists[index].isEdit = !state.lists[index].isEdit;
-      state.editValue = state.lists[index].name
+      state.lists[index].isEdit = true;
+      state.editIndex = index
+      state.editValue = state.lists[index].name;
     };
 
-    const editInputBlur = (index)=>{
-      state.lists[index].isEdit = !state.lists[index].isEdit;    
-    }
+    const editInputBlur = (index) => {
+      state.lists[index].isEdit = !state.lists[index].isEdit;
+    };
 
     const changeCheckedStatus = (index) => {
       state.lists[index].isChecked = !state.lists[index].isChecked;
     };
 
-    return { state, changeCheckedStatus, add, showEditInput, editInputBlur };
+    return { state, changeCheckedStatus, add, showEditInput, editInputBlur,mouseDown, inputRef };
   },
 };
 </script>
