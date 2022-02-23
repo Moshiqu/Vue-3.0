@@ -21,3 +21,11 @@ npm run lint
 ```
 
 ### Screenshots
+#### 添加
+![image](https://github.com/Moshiqu/Vue-3.0/blob/master/todolist/screenshot/todo.jpg)
+
+#### 删除
+![image](https://github.com/Moshiqu/Vue-3.0/blob/master/todolist/screenshot/deleted.jpg)
+
+#### 已完成
+![image](https://github.com/Moshiqu/Vue-3.0/blob/master/todolist/screenshot/done.jpg)
