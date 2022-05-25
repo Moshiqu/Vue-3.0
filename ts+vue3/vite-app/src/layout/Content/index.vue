@@ -17,6 +17,7 @@ import C from './C.vue'
 import D from './D'
 import E from './E.vue'
 import F from './F.vue'
+import G from './G.vue'
 
 type Tab = {
     name: string,
@@ -44,6 +45,9 @@ const data = reactive<Tab[]>([
     }, {
         name: 'hooks',
         comName: markRaw(F)
+    }, {
+        name: '全局挂载 filter',
+        comName: markRaw(G)
     }
 ])
 
