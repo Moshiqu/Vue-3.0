@@ -18,6 +18,8 @@ import D from './D'
 import E from './E.vue'
 import F from './F.vue'
 import G from './G.vue'
+import H from './H.vue'
+import I from './I.vue'
 
 type Tab = {
     name: string,
@@ -48,6 +50,12 @@ const data = reactive<Tab[]>([
     }, {
         name: '全局挂载 filter',
         comName: markRaw(G)
+    },{
+        name:'element样式穿透',
+        comName:markRaw(H)
+    },{
+        name:'pinia',
+        comName:markRaw(I)
     }
 ])
 

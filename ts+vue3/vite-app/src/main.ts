@@ -2,6 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/css/reset.less'
 import mitt from 'mitt'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import { createPinia } from 'pinia'
+
+const store = createPinia()
 
 const Mit = mitt()
 const app = createApp(App)
@@ -23,4 +28,6 @@ app.config.globalProperties.$filters = {
         return `filter.${str}`
     }
 }
+app.use(ElementPlus)
+app.use(store)
 app.mount('#app')
