@@ -12,7 +12,6 @@ type Name = {
 }
 
 const list:Name[] = await axios('./data.json')
-console.log(list);
 </script>
 
 <style lang="less" scoped>

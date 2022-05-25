@@ -14,6 +14,9 @@ import { markRaw, reactive, ref } from 'vue';
 import A from './A.vue'
 import B from './B.vue'
 import C from './C.vue'
+import D from './D'
+import E from './E.vue'
+import F from './F.vue'
 
 type Tab = {
     name: string,
@@ -24,24 +27,37 @@ type Com = Pick<Tab, 'comName'>
 
 const data = reactive<Tab[]>([
     {
-        name: '按钮A',
+        name: 'keep-alive',
         comName: markRaw(A)
     }, {
-        name: '按钮B',
+        name: 'transition',
         comName: markRaw(B)
     }, {
-        name: '按钮C',
+        name: 'mitt',
         comName: markRaw(C)
-    },
+    }, {
+        name: 'tsx',
+        comName: markRaw(D)
+    }, {
+        name: '自定义指令 directive',
+        comName: markRaw(E)
+    }, {
+        name: 'hooks',
+        comName: markRaw(F)
+    }
 ])
 
 let current = reactive<Com>({
     comName: data[0].comName
 })
 
-const switchTab = (item:Tab)=>{
+const switchTab = (item: Tab) => {
     current.comName = item.comName
 }
+
+document.addEventListener('selectstart', function (e) {
+    e.preventDefault();
+})
 
 </script>
 
