@@ -2,6 +2,7 @@
     <div>
         <router-link to="/user1">/user1</router-link>
         <router-link to="/user2" style="margin-left:30px">/user2</router-link>
+        <router-link to="/beforeGuard" style="margin-left:30px">前置守卫</router-link>
     </div>
     <hr>
     <div>
